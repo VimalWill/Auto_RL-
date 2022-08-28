@@ -14,5 +14,3 @@ class WC_Agent():
 
     config = ConfigParser()
     config.read(join(dirname(dirname(abspath(__file__))), 'config.ini'))
-    print("modify")
-
