@@ -51,8 +51,18 @@ class RLenv:
         time.sleep(4)
 
         #adding to gnss to the vechile 
-        self.lidar_sen = self.blueprint_library.find("sensor.other.gnss")
+        gnss_sen = self.blueprint_library.find("sensor.other.gnss")
+        self.gnss_sen = self.world.spawn_actor(gnss_sen,transform,attach_to = self.vechile)
+        self.gnss_sen.listen(lambda event: self.gnss_sen(event))
         
+        while self.front_camera is None:
+            time.sleep(0.01)
+        
+        self.episode_start = time.time()
+        
+
+
+
 
 def process_img(image):
     i = np.array(image.raw_data)
