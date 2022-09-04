@@ -5,7 +5,8 @@ import glob
 import sys 
 import time 
 import random 
-import cv2 
+import cv2
+import os 
 
 try:
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
