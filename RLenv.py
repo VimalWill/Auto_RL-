@@ -35,3 +35,17 @@ class env():
         self.world = self.client.get_world()
         self.blueprint_library = self.world.get_blueprint_library 
         self.model_3 = self.blueprint_library.filter("model3")[0]
+    
+    def reset(self):
+        self.imu_hist = []
+        self.actor_list = []
+
+        self.transform = random.choice(self.world.get_map().get_spawn_points())
+        self.vehicle = self.world.spawn_actor(self.model_3,self.transform)
+        self.actor_list.append(self.vehicle)
+
+        transform_s = carla.Transform(carla.Location(z=2))
+        imu_sensor = self.blueprint_library.find("sensor.other.imu")
+        self.imu_sensor = self.world.spawn_actor(imu_sensor,transform_s,attach_to = self.vehicle)
+        
+
