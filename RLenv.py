@@ -90,6 +90,31 @@ class env():
             cv2.waitKey(1)
         self.front_camera = i3 
     
+    def step(self,action):
+        if action == 0:
+            self.vehicle.apply_control(carla.Vehiclecontrol(throttle = 1.0,steer = -1*self.STEER_AMT))
+        elif action == 1:
+            self.vehicle.apply_control(carla.Vehiclecontrol(throttle = 1.0,steer = 0))
+        elif action == 2:
+            self.vehicle.apply_control(carla.Vehiclecontrol(throttle = 1.0,steer = 1*self.STEER_AMT))
+        
+        #calculating the acceleration 
+        accel = self.data_dict['imu']['accel'] - carla.Vector3D(x=0,y=0,z=9.81)
+        accel_mag = accel.length()
+
+        if accel_mag > 50:
+            done = False 
+            reward = -200 
+
+        elif accel_mag < 50:
+            done = False 
+            reward = -1
+        
+        elif self.episode_start + SECONDS_PER_EPISODE < time.time():
+            done = True 
+            reward = 200 
+        return self.front_camera , reward, done , None 
+        
 
             
 
