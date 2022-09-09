@@ -21,6 +21,8 @@ IM_WIDTH = 640
 IM_HEIGHT = 480
 SECONDS_PER_EPISODE = 10
 
+
+
 class env():
     SHOW_CAM = SHOW_PREVIEW
     STEER_AMT = 1.0
@@ -53,11 +55,22 @@ class env():
         self.actor_list.append(self.cam_Sensor)
         self.cam_Sensor.listen(lambda data_c: self.camera_callback(data_c))
 
+        self.vehicle.apply_control(carla.Vehiclecontrol(throttle=0.0,brake = 0.0))
+        time.sleep(4.0)
+
         transform_s = carla.Transform(carla.Location(z=2))
         imu_sensor = self.blueprint_library.find("sensor.other.imu")
         self.imu_sensor = self.world.spawn_actor(imu_sensor,transform_s,attach_to = self.vehicle)
         self.actor_list.append(self.imu_sensor)
         self.imu_sensor.listen(lambda data: self.imu_callback(data))
+
+        while self.front_camera is None:
+            time.sleep(0.01)
+
+        self.episode_start = time.time()
+        self.vehicle.apply_control(carla.Vehiclecontrol(throttle=0.0,brake=0.0))
+
+        return self.front_camera
     
     
     def imu_callback(self,data):
@@ -76,6 +89,7 @@ class env():
             cv2.imshow("",i3)
             cv2.waitKey(1)
         self.front_camera = i3 
+    
 
             
 
