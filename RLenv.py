@@ -102,19 +102,16 @@ class env():
         accel = self.data_dict['imu']['accel'] - carla.Vector3D(x=0,y=0,z=9.81)
         accel_mag = accel.length()
 
-        if accel_mag > 50:
+        if accel_mag in range(5,50):
             done = False 
-            reward = -200 
+            reward = 1
 
-        elif accel_mag < 50:
+        elif accel_mag > 50:
             done = False 
             reward = -1
         
         elif self.episode_start + SECONDS_PER_EPISODE < time.time():
             done = True 
             reward = 200 
-        return self.front_camera , reward, done , None 
-        
-
             
-
+        return self.front_camera , reward, done , None 
