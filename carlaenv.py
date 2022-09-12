@@ -1,6 +1,3 @@
-from lib2to3.pytree import HUGE
-from this import d
-from tkinter import DISABLED
 import carla 
 from gym import Env
 from gym.spaces import Box, Discrete
