@@ -14,7 +14,6 @@ from tensorflow import keras
 from keras import Model
 from keras.layers import Dense, Activation, Input
 from keras.applications import ResNet50
-from keras.optimizers import Adam
 
 from rl.agents import DQNAgent
 
@@ -70,7 +69,7 @@ class carlaEnv(Env):
         accel_mag = accel.length()
         
         #computing reward 
-        if len(self.collision_hist) != 0 and (accel_mag < 50 and accel_mag > 35):
+        if len(self.collision_hist) == 0 and (accel_mag < 50 and accel_mag > 35):
             Done = False 
             Reward = 5
 
@@ -152,10 +151,20 @@ class carlaEnv(Env):
 
 class DqlModel():
     def __init__(self):
-        pass 
+        self.state = carlaEnv().observation_space.shape 
+        self.action = carlaEnv().action_space.n 
 
-    def cnn_model(self,action, state):
-        pass 
+    def cnn_model(self):
+
+        #using Resnet pretrained model 
+        self.base_model = ResNet50(input_tensor=self.state,weights="imagenet",include_top=False)
+        self.x = self.base_model.output
+        self.x = Dense(64, Activation = "relu")(self.x)
+        self.x = Dense(32, Activation = "relu")(self.x)
+        self.x = Dense(64, Activation = "relu")(self.x)
+
+        self.output_layer = Dense(self.action,Activation='linear')(self.x)
+        self.model = Model(input = self.base_model.input, output = self.output_layer)
 
     def DqnModel(self):
         pass 
