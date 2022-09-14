@@ -9,6 +9,15 @@ import random
 import cv2 
 import os
 
+import tensorflow as tf 
+from tensorflow import keras
+from keras import Model
+from keras.layers import Dense, Activation, Input
+from keras.applications import ResNet50
+from keras.optimizers import Adam
+
+from rl.agents import DQNAgent
+
 try:
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
         sys.version_info.major,
@@ -141,6 +150,14 @@ class carlaEnv(Env):
     def collision_callback(self,event):
         self.collision_hist.append(event)
 
+class DqlModel():
+    def __init__(self):
+        pass 
 
+    def cnn_model(self,action, state):
+        pass 
+
+    def DqnModel(self):
+        pass 
 
     
