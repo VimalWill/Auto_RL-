@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from carlaenv import carlaEnv, DqlModel
 from keras.optimizers import Adam
 
