@@ -16,6 +16,8 @@ from keras.layers import Dense, Activation, Input
 from keras.applications import ResNet50
 
 from rl.agents import DQNAgent
+from rl.policy import BoltzmannGumbelQPolicy
+from rl.memory import SequentialMemory
 
 try:
     sys.path.append(glob.glob('../carla/dist/carla-*%d.%d-%s.egg' % (
@@ -167,6 +169,12 @@ class DqlModel():
         self.model = Model(input = self.base_model.input, output = self.output_layer)
 
     def DqnModel(self):
-        pass 
+        self.policy = BoltzmannGumbelQPolicy()
+        self.memory = SequentialMemory(limit = 50000,window_length = 1)
+        
+        self.dqn = DQNAgent(model = self.model, memory = self.memory,policy=self.policy, 
+        nb_actions = self.action,nb_steps_warmup=10,target_model_update = 1e-2)
+        
+     
 
     
