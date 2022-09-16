@@ -29,7 +29,6 @@ SHOW_PREVIEW = False
 ACTIONS  = 3
 IM_WIDTH =  640
 IM_HEIGHT = 480
-STEER_AMT = 1.0
 SECONDS_PER_EPISODE = 60 
 
 class carlaEnv(Env):
@@ -38,6 +37,7 @@ class carlaEnv(Env):
     SHOW_CAM = SHOW_PREVIEW
     im_width = IM_WIDTH
     im_height = IM_HEIGHT
+    STEER_AMT = 1.0
     front_camera = None
 
     def __init__(self):
@@ -58,11 +58,11 @@ class carlaEnv(Env):
     def step(self,action):
         
         if action == 0:
-            self.vehicle.apply_control(carla.VehicleControl(throttle=1.0,steer = -1*STEER_AMT))
+            self.vehicle.apply_control(carla.VehicleControl(throttle=1.0,steer = -1*self.STEER_AMT))
         elif action == 1:
             self.vehicle.apply_control(carla.VehicleControl(throttle=1.0,steer = 0))
         elif action == 2:
-            self.vehicle.apply_control(carla.VehicleControl(throttle=1.0,steer= 1*STEER_AMT))
+            self.vehicle.apply_control(carla.VehicleControl(throttle=1.0,steer= 1*self.STEER_AMT))
         
         #calculating the acceleration 
         accel = self.data_dict['imu']['accel'] - carla.Vector3D(x=0,y=0,z=9.81)
