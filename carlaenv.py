@@ -172,8 +172,10 @@ class DqlModel():
         self.policy = BoltzmannGumbelQPolicy()
         self.memory = SequentialMemory(limit = 50000,window_length = 1)
         
-        self.dqn = DQNAgent(model = self.model, memory = self.memory,policy=self.policy, 
+        dqn = DQNAgent(model = self.model, memory = self.memory,policy=self.policy, 
         nb_actions = self.action,nb_steps_warmup=10,target_model_update = 1e-2)
+
+        return dqn
         
      
 
