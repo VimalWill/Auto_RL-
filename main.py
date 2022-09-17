@@ -7,6 +7,7 @@ def main():
     -> import the env and DQL agent
     -> compile the DQL model 
     -> fit the env and actions  
+    -> test the with n_esp = 50k, 100k and 150k
 
     """       
 
