@@ -1,0 +1,8 @@
+carla==0.9.13
+gym==0.7.4
+keras==2.10.0
+keras_rl2==1.0.5
+numpy==1.21.6
+opencv_python==4.6.0.66
+rl==3.0
+tensorflow==2.10.0
