@@ -15,11 +15,10 @@ def main():
     env = carlaEnv()
 
     #calling the DQL model 
-    dql = DqlModel.DqnModel()
+    dql = DqlModel().DqnModel()
 
     dql.compile(Adam(lr=1e-3),metrics=['mae'])
     dql.fit(env,nb_steps=50000,visualize = True, verbose=1)
-
     
 
 if __name__ == "__main__":

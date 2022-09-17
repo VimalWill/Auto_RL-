@@ -52,9 +52,9 @@ class carlaEnv(Env):
 
         #init the carla 
         self.client = carla.Client('localhost',2000)
-        self.client.set_timeout(1.0)
+        self.client.set_timeout(10.0)
         self.world = self.client.get_world()
-        self.blueprint_library = self.world.get_blueprint_library 
+        self.blueprint_library = self.world.get_blueprint_library()
         self.model_3 = self.blueprint_library.filter("model3")[0]
 
     def step(self,action):
